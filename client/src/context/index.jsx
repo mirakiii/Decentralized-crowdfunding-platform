@@ -30,22 +30,22 @@ export const StateContextProvider = ({ children }) => {
     }
   }
 
-  // const getCampaigns = async () => {
-  //   const campaigns = await contract.call('getCampaigns');
-
-  //   const parsedCampaings = campaigns.map((campaign, i) => ({
-  //     owner: campaign.owner,
-  //     title: campaign.title,
-  //     description: campaign.description,
-  //     target: ethers.utils.formatEther(campaign.target.toString()),
-  //     deadline: campaign.deadline.toNumber(),
-  //     amountCollected: ethers.utils.formatEther(campaign.amountCollected.toString()),
-  //     image: campaign.image,
-  //     pId: i
-  //   }));
-
-  //   return parsedCampaings;
-  // }
+  const getCampaigns = async () => {
+    const campaigns = await contract.call('getCampaigns');
+    console.log(campaigns)
+    const parsedCampaings = campaigns.map((campaign, i) => ({
+      owner: campaign.owner,
+      title: campaign.title,
+      description: campaign.description,
+      target: ethers.utils.formatEther(campaign.target.toString()),
+      deadline: campaign.deadline.toNumber(),
+      amountCollected: ethers.utils.formatEther(campaign.amountCollected.toString()),
+      image: campaign.image,
+      pId: i
+    }));
+    
+    return parsedCampaings;
+  }
 
   // const getUserCampaigns = async () => {
   //   const allCampaigns = await getCampaigns();
@@ -85,7 +85,7 @@ export const StateContextProvider = ({ children }) => {
         contract,
         connect,
         createCampaign: publishCampaign,
-        // getCampaigns,
+        getCampaigns,
         // getUserCampaigns,
         // donate,
         // getDonations
