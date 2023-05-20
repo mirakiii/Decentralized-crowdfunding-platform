@@ -11,7 +11,7 @@ const CampaignDetails = () => {
   
   const { state } = useLocation();
   // const navigate = useNavigate();
-  const { getDonations, contract, address } = useStateContext();
+  const { donate, getDonations, contract, address } = useStateContext();
 
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState('');
@@ -19,13 +19,23 @@ const CampaignDetails = () => {
 
   const remainingDays = daysLeft(state.deadline);
 
-  const handleDonate = async () => {
-    // setIsLoading(true);
+  const fetchDonators = async () => {
+    const data = await getDonations(state.pId);
+    // console.log(data);
+    setDonators(data);
+  }
 
-    // await donate(state.pId, amount); 
+  useEffect(() => {
+    if(contract) fetchDonators();
+  }, [contract, address])
+
+  const handleDonate = async () => {
+    setIsLoading(true);
+
+    await donate(state.pId, amount); 
 
     // navigate('/')
-    // setIsLoading(false);
+    setIsLoading(false);
   }
 
   return (
@@ -77,6 +87,11 @@ const CampaignDetails = () => {
 
               <div className="mt-[20px] flex flex-col gap-4">
                 {donators.length > 0 ? donators.map((item, index) => (
+
+                  // <div>
+                  //   DONATOR
+                  // </div>
+
                   <div key={`${item.donator}-${index}`} className="flex justify-between items-center gap-4">
                     <p className="font-epilogue font-normal text-[16px] text-[#b2b3bd] leading-[26px] break-ll">{index + 1}. {item.donator}</p>
                     <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] break-ll">{item.donation}</p>
