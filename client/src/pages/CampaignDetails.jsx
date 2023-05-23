@@ -10,7 +10,7 @@ import { thirdweb } from '../assets';
 const CampaignDetails = () => {
   
   const { state } = useLocation();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { donate, getDonations, contract, address } = useStateContext();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +34,7 @@ const CampaignDetails = () => {
 
     await donate(state.pId, amount); 
 
-    // navigate('/')
+    navigate('/')
     setIsLoading(false);
   }
 
